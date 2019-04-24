@@ -1,0 +1,28 @@
+{
+  "name": "meuprojeto",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www",
+    "setProxy": "npm config set proxy http://192.168.113.8:3128"
+  },
+  "author": "Alex Abreu Louzada",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.1",
+    "bootstrap": "^4.3.1",
+    "chart.js": "^2.8.0",
+    "cookie-parser": "^1.4.4",
+    "datatables.net-bs4": "^1.10.19",
+    "debug": "^2.6.9",
+    "ejs": "^2.5.9",
+    "express": "^4.16.4",
+    "http-errors": "^1.6.3",
+    "jquery": "^3.3.1",
+    "jquery.easing": "^1.4.1",
+    "morgan": "^1.9.1",
+    "mysql": "^2.17.1",
+    "nodemon": "^1.18.10"
+  }
+}
