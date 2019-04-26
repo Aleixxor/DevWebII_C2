@@ -2,6 +2,8 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
+var db = require('./infra/db');
+var userDB = require('./models/users');
 
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
@@ -13,6 +15,24 @@ var chartsRouter = require('./routes/charts');
 var tablesRouter = require('./routes/tables');
 
 var app = express();
+
+// test database
+
+// db.createDBStructure();
+let user = {
+  nome: "Alex Abreu Louzada",
+  tipo_usuario: "1",
+  email: "alexlouzada2009@gmail.com",
+  password: "alex11021998"
+};
+user = userDB.createUserObject(user);
+
+userDB.loginUser(user);
+
+console.log(user.nome);
+console.log(user.tipo_usuario);
+console.log(user.email);
+console.log(user.password);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
