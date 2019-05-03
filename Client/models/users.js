@@ -1,30 +1,5 @@
 var db = require('../infra/db');
 let User = require('../classes/dbClasses').User;
-let user = new User(
-    nome = "Alex Abreu Louzada",
-    tipo_usuario = "1",
-    email = "alexlouzada2009@gmail.com",
-    password = "alex11021998"
-)
-
-exports.createUserObject = (user) => {
-    if(user.cod_usuario){
-        return new User(
-            nome = user.nome,
-            tipo_usuario = user.tipo_usuario,
-            email = user.email,
-            password = user.password,
-            cod_usuario = user.cod_usuario
-        )
-    }else{
-        return new User(
-            nome = user.nome,
-            tipo_usuario = user.tipo_usuario,
-            email = user.email,
-            password = user.password
-        )
-    }
-}
 
 exports.addUser = (user) => {
     let sql = `
@@ -68,7 +43,9 @@ exports.searchUsers = (userParams) => {
     db.loadQuery(sql);
 }
 
-exports.loginUser = (user) => {
+exports.loginUser = async (user) => {
     let sql = `SELECT * FROM usuarios WHERE email = '${user.email}' and password = '${user.password}'`;
-    db.loadQuery(sql);
+    let result = await db.loadQuery(sql);
+    console.log(result)
+    
 }

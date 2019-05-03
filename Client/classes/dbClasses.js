@@ -1,11 +1,3 @@
-function User(nome, tipo_usuario, email, password, cod_usuario) {
-    this.cod_usuario = cod_usuario;
-    this.nome = nome;
-    this.tipo_usuario = tipo_usuario;
-    this.email = email;
-    this.password = password;
-}
-
 function Active(cod_ativo, __cod_usuario, descricao, empresa) {
     this.cod_ativo = cod_ativo;
     this.__cod_usuario = __cod_usuario;
@@ -20,6 +12,14 @@ function Transaction(cod_transacao, ativo, __cod_usuario, quantidade, preco, dat
     this.quantidade = quantidade;
     this.preco = preco;
     this.data_transacao = data_transacao;
+}
+
+function User(nome, tipo_usuario, email, password, cod_usuario) {
+    this.cod_usuario = cod_usuario;
+    this.nome = nome;
+    this.tipo_usuario = tipo_usuario;
+    this.email = email;
+    this.password = password;
 }
 
 exports.Active = Active;

@@ -1,47 +1,62 @@
 let mysql = require('mysql');
+let util = require('util');
 const enviroment = require('./enviroment');
 
-exports.openConnection = () => {
-    let connection = mysql.createConnection(enviroment.connConfig);
-    connection.connect(err => {
-        if (err) {
-            console.log('Ocorreu um erro de conexão: ' + err);
-        }
-        else {
-            console.log('Conexão estabelecida com sucesso ao banco ' + enviroment.connConfig.database);
-        }
-    })
-    return connection;
+exports.openConnection = async () => {
+    try{
+        let connection = mysql.createConnection(enviroment.connConfig);
+        await connection.connect(err => {
+            if (err) {
+                console.log('Ocorreu um erro de conexão: ' + err);
+            }
+            else {
+                console.log('Conexão estabelecida com sucesso ao banco ' + enviroment.connConfig.database);
+            }
+        })
+        return connection;
+    }catch (err){
+        console.log(err);
+    }
 }
 
-exports.closeConnection = (connection) => {
-    connection.end(err => {
+exports.closeConnection = async (connection) => {
+    try{
+        await connection.end(err => {
         if (err) {
-            console.log('Ocorreu um erro ao desconectar: ' + err);
-        }
-        else {
-            console.log('Conexão encerrada com sucesso.');
-        }
-    })
+                console.log('Ocorreu um erro ao desconectar: ' + err);
+            }
+            else {
+                console.log('Conexão encerrada com sucesso.');
+            }
+        })
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
 
-exports.loadQuery = (sql) => {
-    let connection = this.openConnection();
-    connection.query(sql, (err, result, fields) => {
-        if (err) {
-            console.log("Erro na query: \n\n" + err + "\n\n Sql utilizado: \n\n" + sql);
-        } else {
-            console.log("Query rodada com sucesso!");
-        }
-
-        if (result) console.log(result);
-
-        if (fields) console.log(fields);
-    });
-    this.closeConnection(connection);
+exports.loadQuery = async (sql) => {
+    try {
+        let connection = await this.openConnection();
+        let queryResult;
+        connection.query(sql, (err, result, fields) => {
+            if (err) console.log("Erro na query: \n\n" + err + "\n\n Sql utilizado: \n\n" + sql);
+            if (result) {
+                queryResult = result;
+            }
+            // if (fields) console.log(fields);
+        });
+        await this.closeConnection(connection);
+        if (queryResult) return queryResult;
+    } 
+    catch (err)
+    {
+        console.log(err);
+    }
 }
 
 //---------------------------------------------------------------------------------
+
 exports.createDBStructure = () => {
     let sql = [
         `CREATE TABLE IF NOT EXISTS 
